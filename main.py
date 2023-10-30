@@ -3,7 +3,7 @@ import heapq
 
 
 # this class will be used to represent the district on the graph
-class Node:
+class District:
     def __init__(self, name):
         self.name = name
         self.neighbors = {}
@@ -14,28 +14,28 @@ class Node:
 
 class Graph:
     def __init__(self):
-        self.nodes = {}
+        self.districts = {}
 
-    def add_node(self, name):
-        node = Node(name)
-        self.nodes[name] = node
+    def add_district(self, name):
+        district = District(name)
+        self.districts[name] = district
 
-    def add_edge(self, node1, node2, weight):
-        self.nodes[node1].add_neighbor(node2, weight)
-        self.nodes[node2].add_neighbor(node1, weight)
+    def add_edge(self, district1, district2, weight):
+        self.districts[district1].add_neighbor(district2, weight)
+        self.districts[district2].add_neighbor(district1, weight)
 
     def dijkstra(self, start):
-        distances = {name: float('inf') for name in self.nodes}
+        distances = {name: float('inf') for name in self.districts}
         distances[start] = 0
         priority_queue = [(0, start)]
         
         while priority_queue:
-            current_distance, current_node = heapq.heappop(priority_queue)
+            current_distance, current_district = heapq.heappop(priority_queue)
 
-            if current_distance > distances[current_node]:
+            if current_distance > distances[current_district]:
                 continue
 
-            for neighbor, weight in self.nodes[current_node].neighbors.items():
+            for neighbor, weight in self.districts[current_district].neighbors.items():
                 distance = current_distance + weight
                 if distance < distances[neighbor]:
                     distances[neighbor] = distance
@@ -48,7 +48,7 @@ class Graph:
         path = [end]
         path_cost = 0  # Initialize the path cost
         while end != start:
-            for neighbor, weight in self.nodes[end].neighbors.items():
+            for neighbor, weight in self.districts[end].neighbors.items():
                 if distances[end] == distances[neighbor] + weight:
                     path.append(neighbor)
                     path_cost += weight
@@ -59,15 +59,15 @@ class Graph:
 
 # Instantiate the graph and add nodes and edges 
 g = Graph()
-g.add_node("Mchinji")
-g.add_node("Kasungu")
-g.add_node("Dowa")
-g.add_node("Lilongwe")
-g.add_node("Dedza")
-g.add_node("Ntcheu")
-g.add_node("Nkhotakota")
-g.add_node("Salima")
-g.add_node("Ntchisi")
+g.add_district("Mchinji")
+g.add_district("Kasungu")
+g.add_district("Dowa")
+g.add_district("Lilongwe")
+g.add_district("Dedza")
+g.add_district("Ntcheu")
+g.add_district("Nkhotakota")
+g.add_district("Salima")
+g.add_district("Ntchisi")
 
 
 g.add_edge("Mchinji", "Kasungu", 141)
@@ -90,7 +90,7 @@ start_point = input("Enter the starting point: ")
 end_point = input("Enter the destination point: ")
 
 # Check if the input points exist in the graph
-if start_point in g.nodes and end_point in g.nodes:
+if start_point in g.districts and end_point in g.districts:
     shortest_path, path_cost = g.shortest_path(start_point, end_point)
     if shortest_path:
         print("Shortest path:", shortest_path)
