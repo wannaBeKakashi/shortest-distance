@@ -78,6 +78,7 @@ g.add_edge("Dowa", "Lilongwe", 55)
 
 g.add_edge("Dowa", "Ntchisi", 38)
 g.add_edge("Nkhotakota", "Ntchisi", 66)
+g.add_edge("Nkhotakota", "Salima", 112)
 g.add_edge("Dowa", "Salima", 67)
 g.add_edge("Salima", "Dedza", 96)
 g.add_edge("Dedza", "Ntcheu", 74)
